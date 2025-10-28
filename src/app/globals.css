@@ -1,26 +1,127 @@
+/* src/app/globals.css */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* === CSS VARIABLES (UPDATE) === */
+/* src/app/globals.css → @layer base */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    :root {
+    --font-inter: 'Inter', sans-serif;
+    --font-playfair: 'Playfair Display', serif;
+  }
+  /* INTER FOR ALL TEXT */
+  body,
+  p,
+  h1, h2, h3, h4, h5, h6,
+  button,
+  input,
+  textarea,
+  span,
+  a,
+  div {
+    font-family: var(--font-inter) !important;
+  }
+
+  /* PLAYFAIR ONLY FOR LOGO */
+  .font-logo {
+    font-family: var(--font-playfair) !important;
+    font-weight: 700;
+  }
+
+    --glass-bg: rgba(255, 255, 255, 0.9);      /* Clean glass */
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --glass-blur: 12px;
+    --glass-glow: rgba(99, 102, 241, 0.1);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    --glass-shadow-hover: 0 16px 48px rgba(99, 102, 241, 0.1);
+  }
+
+  body {
+    @apply antialiased;
+    background: #f9fafb;        /* Warm, soft gray */
+    color: #1f2937;             /* Dark, readable text */
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-playfair), serif;
+    font-weight: 700;
+    color: #1e293b;             /* Slightly darker headings */
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* === GLASS CLASSES (PURE CSS) === */
+/* === GLASS (UPDATED) === */
+.glass {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px) saturate(180%);
+  box-shadow: 
+    inset 0 0 20px rgba(99, 102, 241, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.15);
+  @apply rounded-3xl transition-all duration-300;
+}
+
+.glass:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    inset 0 0 25px var(--glass-glow), 
+    inset 0 0 35px rgba(139, 92, 246, 0.15),
+    var(--glass-shadow-hover);
+}
+
+.glass-search {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  box-shadow: var(--glass-shadow);
+  @apply flex items-center space-x-3 px-5 py-3 rounded-full w-full max-w-md mx-auto transition-all duration-300;
+}
+
+.glass-search:hover {
+  box-shadow: var(--glass-shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* === LISTINGS PAGE GRADIENT === */
+.bg-gradient-listings {
+  background: linear-gradient(135deg, #eef2ff 0%, #f3e8ff 100%);
+}
+
+/* === CARD HOVER GLOW === */
+/* === CARD HOVER GLOW === */
+.glass-card {
+  @apply bg-white/90 backdrop-blur-xl border border-white/30;
+}
+
+.glass-card:hover {
+  box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15);
+}
+
+.glass-input {
+  @apply w-full px-4 py-3 bg-white/30 border border-white/40 rounded-xl backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition placeholder:text-gray-600;
+}
+
+.glass-btn {
+  background: linear-gradient(to right, #2563eb, #4f46e5);
+  @apply px-6 py-3 rounded-full font-bold text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300;
+}
+
+/* Optional: Make search bar tighter */
+.glass-search {
+  @apply flex items-center space-x-3 px-5 py-3 rounded-full transition-all duration-300;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--glass-shadow);
+}
+/* === COMPACT ANIMATIONS === */
+.animate-blob {
+  animation: blob 6s infinite;
+}
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, -20px) scale(1.1); }
 }
