@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import FilterDrawer from "./FilterDrawer";
 
 export default function SearchBar() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="flex items-center gap-3 mx-auto mt-8 max-w-md w-full">
+    <div className="flex flex-col items-center gap-3 mx-auto mt-8 max-w-md w-full">
       <form onSubmit={handleSearch} className="flex-1 glass-search">
         <input
           type="text"
@@ -47,19 +48,21 @@ export default function SearchBar() {
           Search
         </button>
       </form>
-
-      <Link
-        href="/listings"
-        onClick={handleClear}
-        className={`glass-btn text-sm px-5 py-2 transition-all duration-300 whitespace-nowrap ${
-          currentSearch
-            ? "bg-red-600 hover:bg-red-700 text-white"
-            : "bg-gray-300 text-gray-500 cursor-not-allowed"
-        }`}
-        style={{ pointerEvents: currentSearch ? "auto" : "none" }}
-      >
-        Clear
-      </Link>
+      <div className="flex gap-2">
+        <FilterDrawer onFilter={(f) => console.log("Filters:", f)} />
+        <Link
+          href="/listings"
+          onClick={handleClear}
+          className={`rounded-full flex items-center text-sm px-5 py-2 transition-all duration-300 whitespace-nowrap ${
+            currentSearch
+              ? "bg-red-600 hover:bg-red-700 text-white"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
+          style={{ pointerEvents: currentSearch ? "auto" : "none" }}
+        >
+          Clear
+        </Link>
+      </div>
     </div>
   );
 }

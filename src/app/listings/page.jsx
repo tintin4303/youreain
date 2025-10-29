@@ -6,31 +6,28 @@ import { useState, useEffect } from "react";
 import ApartmentCard from "../components/ApartmentCard";
 import SearchBar from "../components/SearchBar";
 import Navbar from "../components/Navbar";
-import dbConnect from "@/lib/mongodb";
-import Apartment from "@/models/Apartment";
+import PageTransition from "../components/PageTransition";
 
 export default function Listings() {
   const [apartments, setApartments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const search = (searchParams.get("search") || "").toLowerCase();
 
   useEffect(() => {
     async function fetchApartments() {
       try {
-        await dbConnect();
-        const data = await fetch('/api/apartments');
-        const allApartments = await data.json();
-        setApartments(allApartments);
+        const res = await fetch("/api/apartments");
+        const data = await res.json();
+        setApartments(data);
       } catch (error) {
-        console.error('Failed to fetch apartments', error);
+        console.error("Failed to fetch apartments", error);
       } finally {
         setLoading(false);
       }
     }
     fetchApartments();
   }, []);
-
-  const searchParams = useSearchParams();
-  const search = (searchParams.get("search") || "").toLowerCase();
 
   const filtered = apartments.filter((apt) =>
     apt.title.toLowerCase().includes(search)
@@ -45,11 +42,8 @@ export default function Listings() {
   }
 
   return (
-    <>
-      <Navbar />
+    <PageTransition>
       <section className="min-h-screen py-10 px-6 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 opacity-70"></div>
-
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="text-center mb-5">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
@@ -73,7 +67,9 @@ export default function Listings() {
                 <p className="text-xl text-gray-500">
                   No apartments match "<span className="font-semibold">{search}</span>".
                 </p>
-                <p className="text-sm text-gray-400 mt-2">Try searching "D Condo", "Landmark", or "NOP"</p>
+                <p className="text-sm text-gray-400 mt-2">
+                  Try searching "D Condo", "Landmark", or "NOP"
+                </p>
               </div>
             ) : (
               filtered.map((apt) => <ApartmentCard key={apt._id} apt={apt} />)
@@ -81,6 +77,6 @@ export default function Listings() {
           </div>
         </div>
       </section>
-    </>
+    </PageTransition>
   );
 }
