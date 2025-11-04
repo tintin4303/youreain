@@ -9,6 +9,7 @@ export default function Home() {
   return (
     <>
     <PageTransition>
+      <Navbar />
       <Hero />
     </PageTransition>
     </>

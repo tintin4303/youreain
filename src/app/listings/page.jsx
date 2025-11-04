@@ -43,6 +43,7 @@ export default function Listings() {
 
   return (
     <PageTransition>
+      <Navbar />
       <section className="min-h-screen py-10 px-6 relative">
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="text-center mb-5">
@@ -53,14 +54,11 @@ export default function Listings() {
               Verified condos near Assumption University Suvarnabhumi Campus — search by name.
             </p>
           </div>
-
           <SearchBar />
-
           <p className="text-center text-gray-600 mt-6">
             {filtered.length} {filtered.length === 1 ? "apartment" : "apartments"} found for{" "}
             <span className="font-semibold">"{search || "all"}"</span>
           </p>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {filtered.length === 0 ? (
               <div className="col-span-full text-center py-20">

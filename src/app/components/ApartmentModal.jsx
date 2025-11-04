@@ -21,7 +21,7 @@ export default function ApartmentModal({ apt, isOpen, onClose }) {
     e.preventDefault();
     setStatus("Sending...");
     emailjs
-      .sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", form.current, "YOUR_PUBLIC_KEY")
+      .sendForm("service_t24txl9", "template_71kvt4w", form.current, "X8eA-Y4B1Jg8GrShF")
       .then(() => {
         setStatus("Inquiry sent! Owner will reply soon.");
         e.target.reset();
@@ -116,7 +116,7 @@ export default function ApartmentModal({ apt, isOpen, onClose }) {
 
             <form ref={form} onSubmit={handleSubmit} className="space-y-4 mb-6">
               <input type="hidden" name="apartment_title" value={apt.title} />
-              <input type="hidden" name="apartment_id" value={apt._id} />
+              <input type="hidden" name="apartment_id" value={apt._id || ""} />
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Your Email</label>

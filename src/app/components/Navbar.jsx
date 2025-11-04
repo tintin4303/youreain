@@ -32,13 +32,12 @@ export default function Navbar() {
     e.preventDefault();
     setStatus("Sending...");
 
-    emailjs
-      .sendForm(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
-        form.current,
-        "YOUR_PUBLIC_KEY"
-      )
+    emailjs.sendForm(
+      "service_t24txl9",
+      "template_71kvt4w",
+      form.current,
+      "X8eA-Y4B1Jg8GrShF"
+    )
       .then(() => {
         setStatus("Inquiry sent! I'll reply soon.");
         e.target.reset();

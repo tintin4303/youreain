@@ -1,52 +1,15 @@
-/* src/app/globals.css */
 @import "tailwindcss";
 
-/* === CSS VARIABLES (UPDATE) === */
-/* src/app/globals.css → @layer base */
-@layer base {
-  :root {
-    :root {
-    --font-inter: 'Inter', sans-serif;
-    --font-playfair: 'Playfair Display', serif;
-  }
-  /* INTER FOR ALL TEXT */
-  body,
-  p,
-  h1, h2, h3, h4, h5, h6,
-  button,
-  input,
-  textarea,
-  span,
-  a,
-  div {
-    font-family: var(--font-inter) !important;
-  }
+@theme {
+  --font-inter: 'Inter', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
 
-  /* PLAYFAIR ONLY FOR LOGO */
-  .font-logo {
-    font-family: var(--font-playfair) !important;
-    font-weight: 700;
-  }
-
-    --glass-bg: rgba(255, 255, 255, 0.9);      /* Clean glass */
-    --glass-border: rgba(0, 0, 0, 0.1);
-    --glass-blur: 12px;
-    --glass-glow: rgba(99, 102, 241, 0.1);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-    --glass-shadow-hover: 0 16px 48px rgba(99, 102, 241, 0.1);
-  }
-
-  body {
-    @apply antialiased;
-    background: #f9fafb;        /* Warm, soft gray */
-    color: #1f2937;             /* Dark, readable text */
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-playfair), serif;
-    font-weight: 700;
-    color: #1e293b;             /* Slightly darker headings */
-  }
+  --glass-bg: rgba(255, 255, 255, 0.9);      /* Clean glass */
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --glass-blur: 12px;
+  --glass-glow: rgba(99, 102, 241, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  --glass-shadow-hover: 0 16px 48px rgba(99, 102, 241, 0.1);
 }
 
 /* === GLASS CLASSES (PURE CSS) === */
@@ -130,4 +93,3 @@
   background: #4f46e5;
   transition: width 0.3s ease;
 }
-
