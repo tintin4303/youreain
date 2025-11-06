@@ -6,16 +6,16 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative py-16 md:py-24 px-6 overflow-hidden">
+    <section className="relative py-10 md:py-14 px-6 overflow-hidden">
       <div className="max-w-4xl mx-auto text-center">
         {/* Compact Glass Card */}
         <div className="glass p-6 md:p-8 rounded-3xl shadow-2xl backdrop-blur-xl border border-white/30">
-          <h1 className="text-4xl md:text-5xl font-logo font-bold mb-3 text-gray-900">
+          <h1 className="text-4xl md:text-5xl font-logo font-bold mb-3">
             Your<span className="text-indigo-600 font-logo dark:text-white">Eain</span>
           </h1>
 
-        <p className="text-sm dark:text-gray-200 md:text-base text-gray-600 max-w-xl mx-auto mb-6">
-          Verified apartments near ABAC Suvarnabhumi Campus (Bang Na) — affordable, furnished, student-ready.
+        <p className="text-sm dark:text-gray-200 md:text-base max-w-xl mx-auto mb-6">
+          YourEain is created by an ABAC student in order to help fellow students find apartments near ABAC Suvarnabhumi Campus.
         </p>
         <Link
           href="/listings"

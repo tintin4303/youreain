@@ -1,6 +1,11 @@
 // models/Apartment.js
 import mongoose from 'mongoose';
 
+// Validator: at least 1 image
+function arrayLimit(val) {
+  return val && val.length > 0;
+}
+
 const apartmentSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -24,10 +29,14 @@ const apartmentSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  images: [{
-    type: String,
-    required: true, // URLs to images (e.g., Cloudinary)
-  }],
+  images: {
+    type: [String], // ← ARRAY OF STRINGS (URLs)
+    required: true,
+    validate: {
+      validator: arrayLimit,
+      message: 'Must have at least one image',
+    },
+  },
   available: {
     type: Boolean,
     default: true,
@@ -43,21 +52,20 @@ const apartmentSchema = new mongoose.Schema({
     default: 1,
   },
   size: {
-    type: Number, // sqm
+    type: Number,
     min: 0,
   },
-  // For admin: owner info, created date
   owner: {
-    type: String, // Owner name or ID
+    type: String,
   },
 }, {
-  timestamps: true, // createdAt, updatedAt
+  timestamps: true,
 });
 
-// Index for fast searches
+// Indexes
 apartmentSchema.index({ title: 'text', location: 'text' });
 apartmentSchema.index({ available: 1, price: 1 });
 
+// Export
 const Apartment = mongoose.models.Apartment || mongoose.model('Apartment', apartmentSchema);
-
 export default Apartment;

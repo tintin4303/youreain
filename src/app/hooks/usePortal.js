@@ -1,4 +1,3 @@
-// src/app/hooks/usePortal.js
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 

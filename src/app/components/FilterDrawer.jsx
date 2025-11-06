@@ -10,7 +10,10 @@ export default function FilterDrawer({ onFilter }) {
   const [bedrooms, setBedrooms] = useState("");
 
   const applyFilter = () => {
-    onFilter({ maxPrice, bedrooms });
+    onFilter({
+      maxPrice: maxPrice ? Number(maxPrice) : undefined,
+      bedrooms: bedrooms ? Number(bedrooms) : undefined,
+    });
     setOpen(false);
   };
 
@@ -18,7 +21,7 @@ export default function FilterDrawer({ onFilter }) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="glass flex items-center gap-2 px-4 py-2 rounded-full text-gray-700"
+        className="glass-btn flex items-center gap-2 px-4 py-2 rounded-full text-gray-700"
       >
         <Filter className="w-5 h-5" /> Filter
       </button>

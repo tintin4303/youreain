@@ -5,11 +5,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import FilterDrawer from "./FilterDrawer";
 
-export default function SearchBar() {
+export default function SearchBar({ onFilter }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentSearch = searchParams.get("search") || "";
-
   const [query, setQuery] = useState(currentSearch);
 
   useEffect(() => {
@@ -29,10 +28,11 @@ export default function SearchBar() {
   const handleClear = () => {
     setQuery("");
     router.push("/listings");
+    onFilter({}); // Clear filters too
   };
 
   return (
-    <div className="flex flex-col items-center gap-3 mx-auto mt-8 max-w-md w-full">
+    <div className="flex flex-col items-center gap-3 mx-auto max-w-md w-full mt-12">
       <form onSubmit={handleSearch} className="flex-1 glass-search">
         <input
           type="text"
@@ -48,8 +48,9 @@ export default function SearchBar() {
           Search
         </button>
       </form>
+
       <div className="flex gap-2">
-        <FilterDrawer onFilter={(f) => console.log("Filters:", f)} />
+        <FilterDrawer onFilter={onFilter} />
         <Link
           href="/listings"
           onClick={handleClear}

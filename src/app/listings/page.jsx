@@ -6,11 +6,12 @@ import { useState, useEffect } from "react";
 import ApartmentCard from "../components/ApartmentCard";
 import SearchBar from "../components/SearchBar";
 import Navbar from "../components/Navbar";
-import PageTransition from "../components/PageTransition";
 
 export default function Listings() {
   const [apartments, setApartments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({ maxPrice: null, bedrooms: null });
+
   const searchParams = useSearchParams();
   const search = (searchParams.get("search") || "").toLowerCase();
 
@@ -29,9 +30,19 @@ export default function Listings() {
     fetchApartments();
   }, []);
 
-  const filtered = apartments.filter((apt) =>
-    apt.title.toLowerCase().includes(search)
-  );
+  // APPLY SEARCH + PRICE + BEDROOMS FILTER
+  const filtered = apartments.filter((apt) => {
+    // Search by title
+    if (search && !apt.title.toLowerCase().includes(search)) return false;
+
+    // Max Price
+    if (filters.maxPrice && apt.price > filters.maxPrice) return false;
+
+    // Min Bedrooms
+    if (filters.bedrooms && apt.bedrooms < filters.bedrooms) return false;
+
+    return true;
+  });
 
   if (loading) {
     return (
@@ -42,8 +53,7 @@ export default function Listings() {
   }
 
   return (
-    <PageTransition>
-      <Navbar />
+    <>
       <section className="min-h-screen py-10 px-6 relative">
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="text-center mb-5">
@@ -54,19 +64,22 @@ export default function Listings() {
               Verified condos near Assumption University Suvarnabhumi Campus — search by name.
             </p>
           </div>
-          <SearchBar />
+
+          {/* SEARCH + FILTERS */}
+          <SearchBar onFilter={setFilters} />
+
           <p className="text-center text-gray-600 mt-6">
-            {filtered.length} {filtered.length === 1 ? "apartment" : "apartments"} found for{" "}
-            <span className="font-semibold">"{search || "all"}"</span>
+            {filtered.length} {filtered.length === 1 ? "apartment" : "apartments"} found
           </p>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {filtered.length === 0 ? (
               <div className="col-span-full text-center py-20">
                 <p className="text-xl text-gray-500">
-                  No apartments match "<span className="font-semibold">{search}</span>".
+                  No apartments match your filters.
                 </p>
                 <p className="text-sm text-gray-400 mt-2">
-                  Try searching "D Condo", "Landmark", or "NOP"
+                  Try adjusting price, bedrooms, or search term.
                 </p>
               </div>
             ) : (
@@ -75,6 +88,6 @@ export default function Listings() {
           </div>
         </div>
       </section>
-    </PageTransition>
+    </>
   );
 }
