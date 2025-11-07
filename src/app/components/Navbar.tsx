@@ -31,10 +31,10 @@ export default function Navbar() {
     setStatus("Sending...");
     emailjs
       .sendForm(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
+        "service_t24txl9",
+        "template_71kvt4w",
         form.current,
-        "YOUR_PUBLIC_KEY"
+        "X8eA-Y4B1Jg8GrShF"
       )
       .then(() => {
         setStatus("Inquiry sent! I'll reply soon.");
@@ -59,7 +59,7 @@ export default function Navbar() {
               className="flex items-center h-10 md:h-12 px-4 md:px-8 rounded-full hover:scale-105 transition-transform"
             >
               <h1 className="text-xl md:text-2xl font-logo">
-                Your<span className="text-indigo-600 font-logo dark:text-indigo-200">Eain</span>
+                Your<span className="text-indigo-400  font-logo dark:text-indigo-200">Eain</span>
               </h1>
             </Link>
             <ThemeToggle />
@@ -117,13 +117,13 @@ export default function Navbar() {
                 transition={{ duration: 0.25 }}
                 className="fixed top-20 left-0 right-0 mx-4 z-40 md:hidden"
               >
-                <div className="glass rounded-3xl p-6 flex flex-col space-y-4 text-center font-medium text-gray-800 border border-white/20 backdrop-blur-xl">
+                <div className="glass rounded-3xl p-6 flex flex-col space-y-4 text-center font-medium border dark:text-white border-white/20 backdrop-blur-xl">
                   {["Apartments"].map((label, i) => (
                     <Link
                       key={i}
                       href={label === "Home" ? "/" : "/listings"}
                       onClick={() => setMobileMenu(false)}
-                      className="hover:text-indigo-600 transition-colors"
+                      className="hover:text-indigo-600 dark:text-white transition-colors"
                     >
                       {label}
                     </Link>

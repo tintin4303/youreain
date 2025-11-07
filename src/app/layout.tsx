@@ -6,6 +6,16 @@ import Navbar from "./components/Navbar";
 import PageTransition from "./components/PageTransition";
 import { ThemeProvider } from "next-themes";
 
+import { type Metadata } from 'next'
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -20,6 +30,7 @@ const playfair = Playfair_Display({
 
 export default function RootLayout({ children }) {
   return (
+    <ClerkProvider>
     <html
       lang="en"
       className={`${inter.variable} ${playfair.variable}`}
@@ -33,10 +44,10 @@ export default function RootLayout({ children }) {
           enableSystem={false}
           disableTransitionOnChange
         >
-          <Navbar />
           {children}
         </ThemeProvider>
       </body>
     </html>
+    </ClerkProvider>
   );
 }

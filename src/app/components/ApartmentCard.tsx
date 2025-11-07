@@ -1,3 +1,4 @@
+// src/app/components/ApartmentCard.tsx
 "use client";
 import { useState } from "react";
 import ApartmentModal from "./ApartmentModal";

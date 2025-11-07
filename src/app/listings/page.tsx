@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import ApartmentCard from "../components/ApartmentCard";
 import SearchBar from "../components/SearchBar";
 import Navbar from "../components/Navbar";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 
 export default function Listings() {
   const [apartments, setApartments] = useState([]);
@@ -54,6 +55,11 @@ export default function Listings() {
 
   return (
     <>
+        <SignedOut>
+          <RedirectToSignIn />
+        </SignedOut>
+        <SignedIn>
+      <Navbar />
       <section className="min-h-screen py-10 px-6 relative">
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="text-center mb-5">
@@ -88,6 +94,7 @@ export default function Listings() {
           </div>
         </div>
       </section>
+      </SignedIn>
     </>
   );
 }

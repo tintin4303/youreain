@@ -5,15 +5,23 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import PageTransition from "./components/PageTransition";
 import Popular from "./components/Popular";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
+import { Sign } from "crypto";
 
 export default function Home() {
   return (
     <>
-    <PageTransition>
-      <SearchBar />
-      <Hero />
-      <Popular />
-    </PageTransition>
+    <SignedOut>
+      <RedirectToSignIn />
+    </SignedOut>
+    <SignedIn>
+      <PageTransition>
+        <Navbar />
+        <SearchBar onFilter={true} />
+        <Hero />
+        <Popular />
+      </PageTransition>
+    </SignedIn>
     </>
   );
 }

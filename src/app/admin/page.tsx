@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ApartmentForm from "./components/ApartmentForm";
 import ApartmentList from "./components/ApartmentList";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -69,6 +70,11 @@ export default function AdminPage() {
   }
 
   return (
+    <>
+    <SignedOut>
+      <RedirectToSignIn />
+    </SignedOut>
+    <SignedIn>
     <div className="min-h-screen bg-gray-50">
       <header className="glass shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -87,5 +93,7 @@ export default function AdminPage() {
         <ApartmentList />
       </main>
     </div>
+    </SignedIn>
+    </>
   );
 }
