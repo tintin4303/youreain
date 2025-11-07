@@ -16,7 +16,7 @@ export default function Navbar() {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
   const [scrolled, setScrolled] = useState(false);
-  const form = useRef();
+  const form = useRef<HTMLFormElement | null>(null);
   const portalRoot = usePortal();
 
   // === Smooth navbar background on scroll ===
