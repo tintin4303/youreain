@@ -8,6 +8,7 @@ import Image from "next/image";
 import usePortal from "../hooks/usePortal";
 import { createPortal } from "react-dom";
 import ThemeToggle from "./ThemeToggle";
+import { useTheme } from "next-themes";
 
 export default function Navbar() {
   const [showContact, setShowContact] = useState(false);
@@ -18,13 +19,24 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const form = useRef<HTMLFormElement | null>(null);
   const portalRoot = usePortal();
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
 
-  // === Smooth navbar background on scroll ===
   useEffect(() => {
+    // Handle scroll event
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
+
+    // Handle mounted state
+    setMounted(true);
+
+      // Cleanup
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,7 +61,7 @@ export default function Navbar() {
     <>
       {/* === NAVBAR === */}
       <nav
-        className={`sticky top-0 z-50 mx-4 md:mx-6 mt-4 transition-all duration-500`}
+        className={`sticky  top-0 z-50 mx-4 md:mx-6 mt-4 transition-all duration-500`}
       >
         <div className="glass p-3 md:p-4 rounded-full flex justify-between items-center border border-white/20">
           {/* Logo */}
@@ -58,8 +70,8 @@ export default function Navbar() {
               href="/"
               className="flex items-center h-10 md:h-12 px-4 md:px-8 rounded-full hover:scale-105 transition-transform"
             >
-              <h1 className="text-xl md:text-2xl font-logo">
-                Your<span className="text-indigo-400  font-logo dark:text-indigo-200">Eain</span>
+              <h1 className="text-xl md:text-2xl">
+                Your<span className="text-indigo-400">Eain</span>
               </h1>
             </Link>
             <ThemeToggle />
@@ -71,7 +83,7 @@ export default function Navbar() {
               <Link
                 key={i}
                 href={label === "Home" ? "/" : "/listings"}
-                className="relative group"
+                className="relative group text-indigo-400"
               >
                 <span className="hover:text-indigo-600 transition-colors">
                   {label}
@@ -123,7 +135,7 @@ export default function Navbar() {
                       key={i}
                       href={label === "Home" ? "/" : "/listings"}
                       onClick={() => setMobileMenu(false)}
-                      className="hover:text-indigo-600 dark:text-white transition-colors"
+                      className="nav-link hover:text-indigo-600  transition-colors"
                     >
                       {label}
                     </Link>
@@ -165,18 +177,18 @@ export default function Navbar() {
                   transition={{ type: "spring", damping: 30, stiffness: 300 }}
                   className="fixed inset-0 z-50 flex items-center justify-center p-4"
                 >
-                  <div className="glass relative max-w-lg w-full mx-auto p-6 md:p-8 bg-white/95 border border-white/30 rounded-3xl">
+                  <div className="glass relative max-w-lg w-full mx-auto p-6 md:p-8 bg-white/95 dark:bg-gray-900/95 border border-white/30 dark:border-gray-700/30 rounded-3xl">
                     <button
                       onClick={() => setShowContact(false)}
-                      className="absolute top-4 right-4 p-2 rounded-full bg-white/40 hover:bg-white/60 transition"
+                      className="absolute top-4 right-4 p-2 rounded-full bg-white/40 dark:bg-gray-700/40 hover:bg-white/60 dark:hover:bg-gray-600/60 transition"
                     >
-                      <X className="w-5 h-5 text-gray-700" />
+                      <X className="w-5 h-5 text-gray-700 dark:text-gray-200" />
                     </button>
 
-                    <h2 className="text-2xl font-bold text-center text-gray-900 mb-6 font-logo">
-                      Contact Us
+                    <h2 className="text-2xl font-bold text-center  mb-6 font-logo">
+                      Contact Me
                     </h2>
-                    <p className="text-center text-gray-600 mb-6">
+                    <p className="text-center  mb-6">
                       Send an inquiry below or contact me directly on LINE.
                     </p>
 
@@ -186,7 +198,7 @@ export default function Navbar() {
                       className="space-y-4 mb-6"
                     >
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium  mb-1">
                           Your Email
                         </label>
                         <input
@@ -200,7 +212,7 @@ export default function Navbar() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium  mb-1">
                           Message
                         </label>
                         <textarea

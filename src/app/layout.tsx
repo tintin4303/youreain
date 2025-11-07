@@ -1,5 +1,4 @@
 // app/layout.jsx
-"use client";
 import "./globals.css";
 import { Inter, Playfair_Display } from "next/font/google";
 import Navbar from "./components/Navbar";
@@ -40,8 +39,8 @@ export default function RootLayout({ children }) {
       <body className="min-h-dvh ">
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
           {children}

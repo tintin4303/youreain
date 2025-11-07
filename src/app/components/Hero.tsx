@@ -1,8 +1,7 @@
 // src/app/components/Hero.jsx
 "use client";
 import Link from "next/link";
-import SearchBar from "./SearchBar";
-import { motion } from "framer-motion";
+
 
 export default function Hero() {
   return (

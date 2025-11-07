@@ -16,7 +16,7 @@ export default function ApartmentCard({ apt }) {
     <>
       <div
         onClick={() => setIsModalOpen(true)}
-        className="glass glass-card group cursor-pointer rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2">        <div className="relative w-full h-48 md:h-56">
+        className="glass glass-card cursor-pointer rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2">        <div className="relative w-full h-48 md:h-56">
           <Image
             src={previewImage}
             alt={apt.title || "Apartment"}

@@ -3,16 +3,12 @@
 @theme {
   --font-inter: 'Inter', sans-serif;
   --font-playfair: 'Playfair Display', serif;
-
-  --glass-bg: rgba(255, 255, 255, 0.9);      /* Clean glass */
+  --glass-bg: rgba(255, 255, 255, 0.9);
   --glass-border: rgba(0, 0, 0, 0.1);
   --glass-blur: 12px;
   --glass-glow: rgba(99, 102, 241, 0.1);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
   --glass-shadow-hover: 0 16px 48px rgba(99, 102, 241, 0.1);
-}
-
-body {
 }
 
 @layer base {
@@ -22,11 +18,11 @@ body {
 }
 
 .glass-search {
+  @apply flex items-center space-x-3 px-5 py-3 rounded-full w-full max-w-md mx-auto transition-all duration-300;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(var(--glass-blur)) saturate(150%);
   box-shadow: var(--glass-shadow);
-  @apply flex items-center space-x-3 px-5 py-3 rounded-full w-full max-w-md mx-auto transition-all duration-300;
 }
 
 .glass-search:hover {
@@ -34,87 +30,80 @@ body {
   transform: translateY(-2px);
 }
 
-/* === LISTINGS PAGE GRADIENT === */
 .bg-gradient-listings {
   background: linear-gradient(135deg, #eef2ff 0%, #f3e8ff 100%);
 }
 
-/* === CARD HOVER GLOW === */
-/* === CARD HOVER GLOW === */
 .glass-card {
-  @apply bg-white/90 backdrop-blur-xl border border-white/30;
+  @apply bg-white/90 dark:bg-gray-900/90 
+         backdrop-blur-xl 
+         border border-white/30 dark:border-gray-700/30
+         transition-all duration-300;
 }
 
 .glass-card:hover {
+  @apply shadow-lg dark:shadow-gray-900/30;
   box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15);
 }
 
 .glass-input {
-  @apply w-full px-4 py-3 bg-white/30 border border-white/40 rounded-xl backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition placeholder:text-gray-600;
+  @apply w-full px-4 py-3 
+         bg-white/30 dark:bg-gray-800/30
+         border border-white/40 dark:border-gray-700/40
+         rounded-xl backdrop-blur-md
+         focus:outline-none focus:ring-2 focus:ring-blue-500
+         text-gray-900 dark:text-white
+         placeholder:text-gray-600 dark:placeholder:text-gray-400
+         transition-all duration-300;
 }
 
-/* Optional: Make search bar tighter */
-.glass-search {
-  @apply flex items-center space-x-3 px-5 py-3 rounded-full transition-all duration-300;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(var(--glass-blur));
-  box-shadow: var(--glass-shadow);
-}
-/* === COMPACT ANIMATIONS === */
 .animate-blob {
   animation: blob 6s infinite;
 }
+
 .animation-delay-2000 {
   animation-delay: 2s;
 }
+
 @keyframes blob {
   0%, 100% { transform: translate(0, 0) scale(1); }
   50% { transform: translate(20px, -20px) scale(1.1); }
 }
 
-.nav-link {
-  position: relative;
-}
-.nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 0%;
-  height: 2px;
-  background: #4f46e5;
-  transition: width 0.3s ease;
-}
-
 .glass {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  @apply bg-white/90 dark:bg-gray-900/90 
+         backdrop-blur-xl
+         border border-white/30 dark:border-gray-700/30
+         transition-colors duration-300;
 }
 
-
-/* globals.css — Dark Mode (Bangkok Night + Blue-Purple Gradient) */
 .dark {
-  body {
-    background: #0f172a; /* slate-950 — deep, calm navy-black */
-    color: #cbd5e1;      /* slate-300 — soft, readable text */
-    min-height: 100dvh;
-  }
-
-  /* Glass panels pop on dark */
+  --glass-bg: rgba(17, 24, 39, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  
   .glass {
-    background: rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    @apply bg-gray-900/90 border-gray-700/30;
+  }
+  
+  .glass-card {
+    @apply bg-gray-900/90 border-gray-700/30;
+  }
+  
+  .glass-search {
+    @apply bg-gray-900/90 border-gray-700/30;
   }
 }
 
 .glass-btn {
+  @apply px-6 py-3 rounded-full 
+         cursor-pointer font-bold text-white
+         shadow-lg hover:shadow-xl 
+         transform hover:scale-105 
+         transition-all duration-300;
   background: linear-gradient(to right, #2563eb, #4f46e5);
-  @apply px-6 py-3 rounded-full cursor-pointer font-bold text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300;
 }
 
+.glass-btn:hover {
+  @apply dark:shadow-gray-900/30;
+}
