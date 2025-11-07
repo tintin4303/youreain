@@ -26,9 +26,9 @@ export default function ApartmentModal({ apt, isOpen, onClose }) {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
-  const form = useRef();
+  const form = useRef<HTMLFormElement | null>(null);
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     document.body.style.overflow = isOpen ? "hidden" : "unset";
     return () => (document.body.style.overflow = "unset");
   }, [isOpen]);

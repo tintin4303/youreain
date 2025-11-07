@@ -208,7 +208,7 @@ export default function Navbar() {
                           value={message}
                           onChange={(e) => setMessage(e.target.value)}
                           required
-                          rows="3"
+                          rows={3}
                           className="glass-input resize-none"
                           placeholder="Hi! I'm interested in your apartments..."
                         />
