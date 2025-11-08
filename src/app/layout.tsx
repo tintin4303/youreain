@@ -14,6 +14,7 @@ import {
   SignedOut,
   UserButton,
 } from '@clerk/nextjs'
+import FabContact from "./components/FabContact";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,6 +45,7 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           {children}
+          <FabContact />
         </ThemeProvider>
       </body>
     </html>

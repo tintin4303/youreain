@@ -21,7 +21,7 @@ export default function FilterDrawer({ onFilter }) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="glass-btn flex items-center gap-2 px-4 py-2 rounded-full text-gray-700"
+        className="glass-btn flex items-center gap-2 px-4 py-2 rounded-full"
       >
         <Filter className="w-5 h-5" /> Filter
       </button>
@@ -41,7 +41,7 @@ export default function FilterDrawer({ onFilter }) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-0 right-0 w-80 h-full z-50 bg-white dark:bg-slate-900 p-6 shadow-xl"
+              className="fixed rounded-xl glass top-3 right-0 w-80 h-fit z-50  p-6 shadow-xl"
             >
             <div className="flex flex-col justify-end  h-full">
               <div className="flex justify-between items-center mb-6">

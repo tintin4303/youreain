@@ -32,13 +32,13 @@ export default function SearchBar({ onFilter }) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-3 mx-auto max-w-md w-full mt-12">
+    <div className="flex flex-col mx-auto items-center gap-3 max-w-md w-full mt-8 md:flex-row md:justify-center">
       <form onSubmit={handleSearch} className="flex-1 glass-search">
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search ABAC Bang Na apartments (e.g. 'D Condo')"
+          placeholder="Search"
           className="flex-1 bg-transparent outline-none text-gray-800 placeholder:text-gray-600 px-3"
         />
         <button

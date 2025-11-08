@@ -8,7 +8,16 @@ import SearchBar from "../components/SearchBar";
 import Navbar from "../components/Navbar";
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 
-export default function Listings() {
+
+export default function ListingsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ListingsContent />
+    </Suspense>
+  );
+}
+
+function ListingsContent() {
   const [apartments, setApartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({ maxPrice: null, bedrooms: null });
@@ -59,16 +68,9 @@ export default function Listings() {
           <RedirectToSignIn />
         </SignedOut>
         <SignedIn>
-          <Suspense fallback={<div>Loading...</div>}>
       <Navbar />
       <section className="min-h-screen py-10 px-6 relative">
         <div className="relative z-10 max-w-7xl mx-auto">
-          <div className="text-center mb-5">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              ABAC Bang Na Apartments
-            </h1>
-          </div>
-
           {/* SEARCH + FILTERS */}
           <SearchBar onFilter={setFilters} />
 
@@ -92,7 +94,6 @@ export default function Listings() {
           </div>
         </div>
       </section>
-      </Suspense>
       </SignedIn>
     </>
   );
