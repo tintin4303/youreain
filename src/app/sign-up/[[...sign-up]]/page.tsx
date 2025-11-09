@@ -1,18 +1,19 @@
-"use client";
-import { SignIn } from "@clerk/nextjs";
+"use client"; // REQUIRED
+
+import { SignUp } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { dark } from "@clerk/themes";
 
-export default function SignInPage() {
+export default function SignUpPage() {
   const { resolvedTheme } = useTheme();
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <SignIn
+    <div className="min-h-screen flex items-center justify-center  p-4">
+      <SignUp
         routing="path"
-        path="/sign-in"
-        signUpUrl="/sign-up"
-        afterSignInUrl="/"
+        path="/sign-up"
+        signInUrl="/sign-in"
+        afterSignUpUrl="/"
         appearance={{
           baseTheme: resolvedTheme === "dark" ? dark : undefined,
           variables: {

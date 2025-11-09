@@ -19,16 +19,10 @@
 }
 
 .glass-search {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
-  box-shadow: var(--glass-shadow);
-  @apply flex items-center space-x-3 px-5 py-3 rounded-full w-full max-w-md mx-auto transition-all duration-300;
+  @apply h-12 flex items-center space-x-3 px-4 rounded-full w-full max-w-lg;
 }
-
-.glass-search:hover {
-  box-shadow: var(--glass-shadow-hover);
-  transform: translateY(-2px);
+.glass-search input {
+  @apply h-full flex-1 bg-transparent outline-none text-sm placeholder:text-gray-500;
 }
 
 /* === LISTINGS PAGE GRADIENT === */

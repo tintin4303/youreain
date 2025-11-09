@@ -64,16 +64,8 @@ function ListingsContent() {
 
   return (
     <>
-        <SignedOut>
-          <RedirectToSignIn />
-        </SignedOut>
-        <SignedIn>
-      <Navbar />
       <section className="min-h-screen py-10 px-6 relative">
         <div className="relative z-10 max-w-7xl mx-auto">
-          {/* SEARCH + FILTERS */}
-          <SearchBar onFilter={setFilters} />
-
           <p className="text-center text-gray-600 mt-6">
             {filtered.length} {filtered.length === 1 ? "apartment" : "apartments"} found
           </p>
@@ -94,7 +86,6 @@ function ListingsContent() {
           </div>
         </div>
       </section>
-      </SignedIn>
     </>
   );
 }

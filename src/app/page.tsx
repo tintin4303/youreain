@@ -9,17 +9,10 @@ import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 export default function Home() {
   return (
     <>
-    <SignedOut>
-      <RedirectToSignIn />
-    </SignedOut>
-    <SignedIn>
       <PageTransition>
-        <Navbar />
-        <SearchBar onFilter={true} />
         <Hero />
         <Popular />
       </PageTransition>
-    </SignedIn>
     </>
   );
 }

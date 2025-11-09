@@ -37,13 +37,14 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       {/* Dark class is toggled on <html> by next-themes */}
-      <body className="min-h-dvh ">
+      <body className="min-h-dvh pt-20 ">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <Navbar />
           {children}
           <FabContact />
         </ThemeProvider>
