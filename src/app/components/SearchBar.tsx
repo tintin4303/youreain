@@ -5,8 +5,17 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Search, Filter, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useFilters } from "../../context/FilterContext";
+import { Suspense } from "react";
 
 export default function SearchBar() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <SearchBarComponent />
+    </Suspense>
+  );
+}
+
+function SearchBarComponent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentSearch = searchParams.get("search") || "";
