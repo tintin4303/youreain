@@ -1,8 +1,8 @@
 // app/api/favorites/route.js
 import { auth } from "@clerk/nextjs/server";
-import dbConnect from "../../../lib/mongodb";
-import User from "../../../models/User";
-import Apartment from "../../../models/Apartment";
+import dbConnect from "@/lib/mongodb";
+import User from "@/models/User";
+import Apartment from "@/models/Apartment";
 
 export async function POST(req) {
   try {

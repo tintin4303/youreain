@@ -1,6 +1,6 @@
 // app/api/apartments/route.js
-import dbConnect from '../../../lib/mongodb';
-import Apartment from '../../../models/Apartment';
+import dbConnect from '@/lib/mongodb';
+import Apartment from '@/models/Apartment';
 
 export async function GET() {
   try {
