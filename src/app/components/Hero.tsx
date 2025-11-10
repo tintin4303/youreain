@@ -10,7 +10,7 @@ export default function Hero() {
         {/* Compact Glass Card */}
         <div className="glass p-6 md:p-8 rounded-3xl shadow-2xl backdrop-blur-xl border border-white/30">
           <h1 className="text-4xl md:text-5xl font-logo font-bold mb-3">
-            Your<span className="text-indigo-600 font-logo dark:text-white">Eain</span>
+            Your<span className="text-indigo-500 font-logo dark:text-white">Eain</span>
           </h1>
 
         <p className="text-sm dark:text-gray-200 md:text-base max-w-xl mx-auto mb-6">

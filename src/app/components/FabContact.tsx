@@ -36,9 +36,9 @@ export default function FabContact() {
       <button
         onClick={() => setOpen(true)}
         aria-label="Contact"
-        className="fixed right-4 bottom-4 md:right-6 md:bottom-6 z-50 w-15 h-15 rounded-full flex items-center justify-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:scale-105 transition-transform"
+        className="fixed right-4 bottom-4 md:right-6 md:bottom-6 z-50 w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:scale-105 transition-transform"
       >
-        <MessageCircle className="w-6 h-6" />
+        <MessageCircle className="w-5 h-5" />
       </button>
 
       {/* Modal via portal */}

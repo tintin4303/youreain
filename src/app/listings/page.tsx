@@ -6,12 +6,10 @@ import { useState, useEffect, Suspense } from "react";
 import ApartmentCard from "../components/ApartmentCard";
 import SearchBar from "../components/SearchBar";
 import Navbar from "../components/Navbar";
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
-
 
 export default function ListingsPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
       <ListingsContent />
     </Suspense>
   );
@@ -40,17 +38,10 @@ function ListingsContent() {
     fetchApartments();
   }, []);
 
-  // APPLY SEARCH + PRICE + BEDROOMS FILTER
   const filtered = apartments.filter((apt) => {
-    // Search by title
-    if (search && !apt.title.toLowerCase().includes(search)) return false;
-
-    // Max Price
+    if (search && !apt.title?.toLowerCase().includes(search)) return false;
     if (filters.maxPrice && apt.price > filters.maxPrice) return false;
-
-    // Min Bedrooms
     if (filters.bedrooms && apt.bedrooms < filters.bedrooms) return false;
-
     return true;
   });
 
@@ -64,13 +55,11 @@ function ListingsContent() {
 
   return (
     <>
-      <section className="min-h-screen py-10 px-6 relative">
-        <div className="relative z-10 max-w-7xl mx-auto">
-          <p className="text-center text-gray-600 mt-6">
-            {filtered.length} {filtered.length === 1 ? "apartment" : "apartments"} found
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+      {/* MAIN CONTENT – STARTS BELOW NAVBAR */}
+      <main className="pt-20 md:pt-24 min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* GRID – 2 ON MOBILE, 3 ON DESKTOP */}
+          <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
             {filtered.length === 0 ? (
               <div className="col-span-full text-center py-20">
                 <p className="text-xl text-gray-500">
@@ -81,11 +70,13 @@ function ListingsContent() {
                 </p>
               </div>
             ) : (
-              filtered.map((apt) => <ApartmentCard key={apt._id} apt={apt} />)
+              filtered.map((apt) => (
+                <ApartmentCard key={apt._id} apt={apt} />
+              ))
             )}
           </div>
         </div>
-      </section>
+      </main>
     </>
   );
 }

@@ -19,7 +19,7 @@
 }
 
 .glass-search {
-  @apply h-12 flex items-center space-x-3 px-4 rounded-full w-full max-w-lg;
+  @apply flex items-center rounded-full;
 }
 .glass-search input {
   @apply h-full flex-1 bg-transparent outline-none text-sm placeholder:text-gray-500;
@@ -46,7 +46,7 @@
 
 /* Optional: Make search bar tighter */
 .glass-search {
-  @apply flex items-center space-x-3 px-5 py-3 rounded-full transition-all duration-300;
+  @apply flex items-center pl-2 rounded-full transition-all duration-300;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(var(--glass-blur));
@@ -67,7 +67,7 @@
 .glass {
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(18px) saturate(120%);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
@@ -92,6 +92,11 @@
 
 .glass-btn {
   background: linear-gradient(to right, #2563eb, #4f46e5);
-  @apply px-6 py-3 rounded-full cursor-pointer font-bold text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300;
+  @apply rounded-full cursor-pointer font-bold text-white shadow-lg hover:shadow-xl transform hover:bg-linear-to-r hover:from-indigo-500 hover:to-blue-500 transition-all duration-300;
 }
 
+.dark {
+  #nav {
+    background:#0f172a
+  }
+}
