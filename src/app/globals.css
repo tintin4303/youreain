@@ -97,6 +97,7 @@
 
 .dark {
   #nav {
-    background:#0f172a
+    background:#0f172a;
+    box-shadow: #eef2ff 0px 0px 1px;
   }
 }

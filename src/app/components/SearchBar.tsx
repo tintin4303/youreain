@@ -9,31 +9,27 @@ export default function SearchBar({ onFilter }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentSearch = searchParams.get("search") || "";
+
+  // ── UI state ─────────────────────────────────────
   const [query, setQuery] = useState(currentSearch);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [maxPrice, setMaxPrice] = useState("");
-  const [bedrooms, setBedrooms] = useState(""); // ← matches listings/page.jsx
+  const [bedrooms, setBedrooms] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [furnished, setFurnished] = useState("");
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Sync URL → input
-  useEffect(() => {
-    setQuery(currentSearch);
-  }, [currentSearch]);
+  // ── Sync URL → input ─────────────────────────────
+  useEffect(() => setQuery(currentSearch), [currentSearch]);
 
-  // Submit search
-  const handleSearch = (e) => {
+  // ── Search ───────────────────────────────────────
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const q = query.trim();
-    if (q) {
-      router.push(`/listings?search=${encodeURIComponent(q)}`);
-    } else {
-      router.push("/listings");
-    }
+    router.push(q ? `/listings?search=${encodeURIComponent(q)}` : "/listings");
   };
 
-  // Clear everything
+  // ── Clear everything ─────────────────────────────
   const handleClear = () => {
     setQuery("");
     setMaxPrice("");
@@ -41,30 +37,31 @@ export default function SearchBar({ onFilter }) {
     setPropertyType("");
     setFurnished("");
     router.push("/listings");
-    onFilter({});
+    onFilter({});               // reset all filters in ListingsContent
     inputRef.current?.focus();
   };
 
-  // Apply filters
+  // ── Apply filters ────────────────────────────────
   const applyFilter = () => {
-    const filters = {
+    // ONLY the keys that ListingsContent understands + the new ones
+    onFilter({
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
-      bedrooms: bedrooms ? Number(bedrooms) : undefined, // ← matches listings/page.jsx
+      bedrooms: bedrooms ? Number(bedrooms) : undefined,
       propertyType: propertyType || undefined,
       furnished: furnished || undefined,
-    };
-    onFilter(filters);
+    });
     setDrawerOpen(false);
   };
 
+  // ── Render ───────────────────────────────────────
   return (
     <div className="relative w-full max-w-2xl mx-auto">
-      {/* SEARCH BAR + WIDE BUTTONS */}
+      {/* ── SEARCH BAR + BUTTONS ── */}
       <form
         onSubmit={handleSearch}
         className="flex items-center h-11 glass-search overflow-hidden"
       >
-        {/* SHORT INPUT */}
+        {/* short input */}
         <input
           ref={inputRef}
           type="text"
@@ -74,14 +71,12 @@ export default function SearchBar({ onFilter }) {
           className="w-40 md:w-56 lg:w-64 bg-transparent outline-none text-gray-800 placeholder:text-gray-600 px-4 text-sm"
         />
 
-        {/* WIDE BUTTONS AREA */}
+        {/* wide button area */}
         <div className="flex items-center gap-1 pr-2 ml-auto">
-          {/* SEARCH */}
           <button type="submit" className="glass-btn p-2">
             <Search className="w-5 h-5" />
           </button>
 
-          {/* FILTER */}
           <button
             type="button"
             onClick={() => setDrawerOpen(true)}
@@ -90,7 +85,7 @@ export default function SearchBar({ onFilter }) {
             <Filter className="w-5 h-5" />
           </button>
 
-          {/* CLEAR (only if search or filters active) */}
+          {/* CLEAR – appears when any filter or search is active */}
           <AnimatePresence>
             {(currentSearch || maxPrice || bedrooms || propertyType || furnished) && (
               <motion.button
@@ -109,7 +104,7 @@ export default function SearchBar({ onFilter }) {
         </div>
       </form>
 
-      {/* FILTER DRAWER */}
+      {/* ── FILTER DRAWER ── */}
       <AnimatePresence>
         {drawerOpen && (
           <>

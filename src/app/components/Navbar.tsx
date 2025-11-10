@@ -46,7 +46,7 @@ export default function Navbar() {
     <>
       {/* NAVBAR CODE (unchanged from last version) */}
       <nav id="nav"
-        className={`fixed top-0 left-0 right-0 w-full flex items-center bg-white justify-between p-8  z-50 transition-shadow `}
+        className={`fixed top-0 left-0 right-0 w-full flex items-center bg-white justify-between p-8 shadow-sm z-50 transition-shadow `}
       >
             {/* LEFT */}
             <div className="flex items-center space-x-3">

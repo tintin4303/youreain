@@ -18,8 +18,12 @@ export default function ListingsPage() {
 function ListingsContent() {
   const [apartments, setApartments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState({ maxPrice: null, bedrooms: null });
-
+  const [filters, setFilters] = useState({
+    maxPrice: null,
+    bedrooms: null,
+    propertyType: null,
+    furnished: null,
+  });
   const searchParams = useSearchParams();
   const search = (searchParams.get("search") || "").toLowerCase();
 
@@ -38,10 +42,23 @@ function ListingsContent() {
     fetchApartments();
   }, []);
 
+  // FILTER LOGIC – NOW ACCEPTS ALL FIELDS
   const filtered = apartments.filter((apt) => {
+    // Search in title
     if (search && !apt.title?.toLowerCase().includes(search)) return false;
-    if (filters.maxPrice && apt.price > filters.maxPrice) return false;
-    if (filters.bedrooms && apt.bedrooms < filters.bedrooms) return false;
+
+    // Max Price
+    if (filters.maxPrice !== null && apt.price > filters.maxPrice) return false;
+
+    // Min Bedrooms
+    if (filters.bedrooms !== null && apt.bedrooms < filters.bedrooms) return false;
+
+    // Property Type
+    if (filters.propertyType && apt.propertyType !== filters.propertyType) return false;
+
+    // Furnished
+    if (filters.furnished && apt.furnished !== filters.furnished) return false;
+
     return true;
   });
 
