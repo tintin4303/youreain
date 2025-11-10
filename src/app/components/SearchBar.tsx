@@ -117,7 +117,7 @@ export default function SearchBar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-3 right-0 w-80 h-fit z-50 glass rounded-xl p-6 shadow-xl"
+              className="fixed top-3 right-0 w-80 h-fit z-50 glass-menu rounded-xl p-6 shadow-xl"
             >
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-lg font-bold">Filter Apartments</h2>
@@ -132,7 +132,6 @@ export default function SearchBar() {
                 className="glass-input mb-4"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
-                placeholder="e.g. 50000"
               />
 
               <label className="block text-sm mb-2">Min Bedrooms</label>
@@ -141,7 +140,6 @@ export default function SearchBar() {
                 className="glass-input mb-4"
                 value={bedrooms}
                 onChange={(e) => setBedrooms(e.target.value)}
-                placeholder="e.g. 2"
               />
 
               <label className="block text-sm mb-2">Property Type</label>

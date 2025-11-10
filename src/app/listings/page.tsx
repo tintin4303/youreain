@@ -1,3 +1,4 @@
+// src/app/listings/page.tsx
 "use client";
 
 import { useSearchParams } from "next/navigation";
@@ -47,7 +48,6 @@ function ListingsContent() {
 
   return (
     <>
-      <Navbar />
       <main className="pt-20 md:pt-24 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">

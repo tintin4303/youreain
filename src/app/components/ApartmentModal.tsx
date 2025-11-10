@@ -238,7 +238,7 @@ export default function ApartmentModal({ apt, isOpen, onClose }) {
             </div>
             <div className="grid md:grid-cols-2 gap-6 items-center">
               <div className="text-center">
-                <p className="text-sm font-medium text-gray-700 mb-3">
+                <p className="text-sm font-medium mb-3">
                   Scan to chat on LINE
                 </p>
                 <div className="bg-white p-4 rounded-xl shadow-inner mx-auto w-fit">

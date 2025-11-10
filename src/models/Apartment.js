@@ -1,11 +1,6 @@
 // models/Apartment.js
 import mongoose from 'mongoose';
 
-// Validator: at least 1 image
-function arrayLimit(val) {
-  return val && val.length > 0;
-}
-
 const apartmentSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -30,10 +25,10 @@ const apartmentSchema = new mongoose.Schema({
     trim: true,
   },
   images: {
-    type: [String], // ← ARRAY OF STRINGS (URLs)
+    type: [String],
     required: true,
     validate: {
-      validator: arrayLimit,
+      validator: (v) => v.length > 0,
       message: 'Must have at least one image',
     },
   },
@@ -55,9 +50,22 @@ const apartmentSchema = new mongoose.Schema({
     type: Number,
     min: 0,
   },
+  propertyType: {
+    type: String, // Studio, 1BR, 2BR, etc.
+    enum: ['Studio', '1 Bedroom', '2 Bedrooms', '3+ Bedrooms'],
+  },
+  furnished: {
+    type: String, // Yes, No
+    enum: ['Yes', 'No'],
+  },
   owner: {
     type: String,
   },
+  // NEW: Users who favorited this apartment
+  favoritedBy: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }],
 }, {
   timestamps: true,
 });
@@ -65,7 +73,6 @@ const apartmentSchema = new mongoose.Schema({
 // Indexes
 apartmentSchema.index({ title: 'text', location: 'text' });
 apartmentSchema.index({ available: 1, price: 1 });
+apartmentSchema.index({ favoritedBy: 1 });
 
-// Export
-const Apartment = mongoose.models.Apartment || mongoose.model('Apartment', apartmentSchema);
-export default Apartment;
+export default mongoose.models.Apartment || mongoose.model('Apartment', apartmentSchema);
