@@ -4,13 +4,14 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, Filter, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useFilters } from "../../context/FilterContext";
 
-export default function SearchBar({ onFilter }) {
+export default function SearchBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentSearch = searchParams.get("search") || "";
+  const { filters, setFilters } = useFilters();
 
-  // ── UI state ─────────────────────────────────────
   const [query, setQuery] = useState(currentSearch);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [maxPrice, setMaxPrice] = useState("");
@@ -19,17 +20,26 @@ export default function SearchBar({ onFilter }) {
   const [furnished, setFurnished] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // ── Sync URL → input ─────────────────────────────
-  useEffect(() => setQuery(currentSearch), [currentSearch]);
+  // Sync URL → input
+  useEffect(() => {
+    setQuery(currentSearch);
+  }, [currentSearch]);
 
-  // ── Search ───────────────────────────────────────
+  // Sync filters → local state
+  useEffect(() => {
+    setMaxPrice(filters.maxPrice?.toString() || "");
+    setBedrooms(filters.bedrooms?.toString() || "");
+    setPropertyType(filters.propertyType || "");
+    setFurnished(filters.furnished || "");
+  }, [filters]);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const q = query.trim();
     router.push(q ? `/listings?search=${encodeURIComponent(q)}` : "/listings");
   };
 
-  // ── Clear everything ─────────────────────────────
+  // CLEAR WORKS 100%
   const handleClear = () => {
     setQuery("");
     setMaxPrice("");
@@ -37,14 +47,12 @@ export default function SearchBar({ onFilter }) {
     setPropertyType("");
     setFurnished("");
     router.push("/listings");
-    onFilter({});               // reset all filters in ListingsContent
+    setFilters({ maxPrice: null, bedrooms: null, propertyType: null, furnished: null });
     inputRef.current?.focus();
   };
 
-  // ── Apply filters ────────────────────────────────
   const applyFilter = () => {
-    // ONLY the keys that ListingsContent understands + the new ones
-    onFilter({
+    setFilters({
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
       bedrooms: bedrooms ? Number(bedrooms) : undefined,
       propertyType: propertyType || undefined,
@@ -53,15 +61,11 @@ export default function SearchBar({ onFilter }) {
     setDrawerOpen(false);
   };
 
-  // ── Render ───────────────────────────────────────
+  const hasActiveFilter = currentSearch || maxPrice || bedrooms || propertyType || furnished;
+
   return (
     <div className="relative w-full max-w-2xl mx-auto">
-      {/* ── SEARCH BAR + BUTTONS ── */}
-      <form
-        onSubmit={handleSearch}
-        className="flex items-center h-11 glass-search overflow-hidden"
-      >
-        {/* short input */}
+      <form onSubmit={handleSearch} className="flex items-center h-11 glass-search overflow-hidden">
         <input
           ref={inputRef}
           type="text"
@@ -71,23 +75,17 @@ export default function SearchBar({ onFilter }) {
           className="w-40 md:w-56 lg:w-64 bg-transparent outline-none text-gray-800 placeholder:text-gray-600 px-4 text-sm"
         />
 
-        {/* wide button area */}
         <div className="flex items-center gap-1 pr-2 ml-auto">
           <button type="submit" className="glass-btn p-2">
             <Search className="w-5 h-5" />
           </button>
 
-          <button
-            type="button"
-            onClick={() => setDrawerOpen(true)}
-            className="glass-btn p-2"
-          >
+          <button type="button" onClick={() => setDrawerOpen(true)} className="glass-btn p-2">
             <Filter className="w-5 h-5" />
           </button>
 
-          {/* CLEAR – appears when any filter or search is active */}
           <AnimatePresence>
-            {(currentSearch || maxPrice || bedrooms || propertyType || furnished) && (
+            {hasActiveFilter && (
               <motion.button
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -104,7 +102,6 @@ export default function SearchBar({ onFilter }) {
         </div>
       </form>
 
-      {/* ── FILTER DRAWER ── */}
       <AnimatePresence>
         {drawerOpen && (
           <>
@@ -129,7 +126,6 @@ export default function SearchBar({ onFilter }) {
                 </button>
               </div>
 
-              {/* Max Price */}
               <label className="block text-sm mb-2">Max Price (THB)</label>
               <input
                 type="number"
@@ -139,7 +135,6 @@ export default function SearchBar({ onFilter }) {
                 placeholder="e.g. 50000"
               />
 
-              {/* Min Bedrooms */}
               <label className="block text-sm mb-2">Min Bedrooms</label>
               <input
                 type="number"
@@ -149,7 +144,6 @@ export default function SearchBar({ onFilter }) {
                 placeholder="e.g. 2"
               />
 
-              {/* Property Type */}
               <label className="block text-sm mb-2">Property Type</label>
               <select
                 className="glass-input mb-4"
@@ -163,7 +157,6 @@ export default function SearchBar({ onFilter }) {
                 <option value="3+ Bedrooms">3+ Bedrooms</option>
               </select>
 
-              {/* Furnished */}
               <label className="block text-sm mb-2">Furnished</label>
               <select
                 className="glass-input mb-6"

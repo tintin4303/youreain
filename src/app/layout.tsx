@@ -15,6 +15,7 @@ import {
   UserButton,
 } from '@clerk/nextjs'
 import FabContact from "./components/FabContact";
+import { FilterProvider } from "../context/FilterContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,8 +45,10 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
+          <FilterProvider>
           <Navbar />
           {children}
+          </FilterProvider>
           <FabContact />
         </ThemeProvider>
       </body>
