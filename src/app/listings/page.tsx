@@ -143,7 +143,7 @@ function ListingsContent() {
           backdrop-blur-xl border-r border-neutral-300/40 p-6
         `}
       >
-        {/* 🔥 your original sidebar content untouched */}
+        {/* your original sidebar content untouched */}
         <div className="my-6">
           <SearchBar onSearch={setSearchQuery} />
         </div>
@@ -195,7 +195,7 @@ function ListingsContent() {
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium mb-2">Min Bedrooms</label>
+          <label className="block text-sm font-medium mb-2">Minimum Beds</label>
           <select
             value={filters.bedrooms || ""}
             onChange={(e) =>
