@@ -1,4 +1,6 @@
+// src/app/components/Navbar.tsx
 "use client";
+
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -126,18 +128,6 @@ export default function Navbar() {
                     Apartments
                     <House className="w-5 h-5 text-indigo-400" />
                   </Link>
-
-                  {/* Favorites Trigger */}
-                  <button
-                    onClick={() => {
-                      setFavoritesOpen(true);
-                      setMobileMenu(false);
-                    }}
-                    className="py-2 px-4 cursor-pointer hover:bg-gray-400/30 flex justify-between items-center rounded text-left"
-                  >
-                    Favorites
-                    <Heart className="w-5 h-5 text-red-500" />
-                  </button>
 
                   {/* Theme Toggle */}
                   <ThemeToggle />

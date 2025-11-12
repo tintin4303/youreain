@@ -1,85 +1,68 @@
-// src/app/components/ApartmentCard.jsx
+// src/app/components/ApartmentCard.tsx
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import ApartmentModal from "./ApartmentModal";
 import Image from "next/image";
-import { Heart } from "lucide-react";
-import { useUser } from "@clerk/nextjs";
+import { Heart, Zap, Dumbbell, Utensils, Waves, Car } from "lucide-react";
 
 const DEFAULT_IMAGE =
   "https://res.cloudinary.com/demo/image/upload/v1317847384/sample.jpg";
 
-export default function ApartmentCard({ apt }) {
+interface Apartment {
+  _id: string;
+  title: string;
+  price: number;
+  location: string;
+  description?: string;
+  images: string[];
+  available?: boolean;
+  bed?: number;
+  bathrooms?: number;
+  propertyType?: string;
+  furnished?: string;
+  campusVan?: string | null;
+  mapUrl?: string | null;
+  kitchen?: string | null;
+  gym?: string | null;
+  swimmingPool?: string | null;
+  electricityRate?: number | null;
+  isFavorited?: boolean;
+  loading?: boolean;
+}
+
+interface ApartmentCardProps {
+  apt: Apartment;
+  isFavorited?: boolean;
+  loading?: boolean;
+  onToggleFavorite?: (id: string) => void;
+}
+
+export default function ApartmentCard({
+  apt,
+  isFavorited = false,
+  loading = false,
+  onToggleFavorite,
+}: ApartmentCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFavorited, setIsFavorited] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { user, isSignedIn } = useUser();
 
   const previewImage =
     Array.isArray(apt.images) && apt.images[0] ? apt.images[0] : DEFAULT_IMAGE;
 
-  // CHECK ON MOUNT
-  useEffect(() => {
-    if (!isSignedIn || !apt._id) {
-      setIsFavorited(false);
-      return;
-    }
-
-    let isMounted = true;
-
-    const checkFavorite = async () => {
-      try {
-        const res = await fetch("/api/favorites", {
-          headers: { "Content-Type": "application/json" },
-        });
-        if (!res.ok || !isMounted) return;
-        const favorites = await res.json();
-        const isFav = Array.isArray(favorites) && favorites.some(f => f._id === apt._id);
-        if (isMounted) setIsFavorited(isFav);
-      } catch (err) {
-        console.error("Check favorite failed:", err);
-      }
-    };
-
-    checkFavorite();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [apt._id, isSignedIn]);
-
-  // TOGGLE
-  const toggleFavorite = async (e) => {
+  const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!isSignedIn || loading) return;
-
-    const newFavorited = !isFavorited;
-    setIsFavorited(newFavorited);
-    setLoading(true);
-
-    try {
-      const res = await fetch("/api/favorites", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ apartmentId: apt._id }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok || data.error) {
-        setIsFavorited(!newFavorited);
-        console.error("API error:", data.error);
-        return;
-      }
-
-      setIsFavorited(data.isFavorited);
-    } catch (err) {
-      setIsFavorited(!newFavorited);
-      console.error("Network error:", err);
-    } finally {
-      setLoading(false);
+    if (onToggleFavorite && !loading) {
+      onToggleFavorite(apt._id);
     }
   };
+
+  // 🔹 Amenities that exist on this apartment
+  const amenities = [
+    apt.kitchen && { icon: <Utensils className="w-4 h-4" />, label: "Kitchen" },
+    apt.gym && { icon: <Dumbbell className="w-4 h-4" />, label: "Gym" },
+    apt.swimmingPool && { icon: <Waves className="w-4 h-4" />, label: "Pool" },
+    apt.campusVan && { icon: <Car className="w-4 h-4" />, label: "Van" },
+  ].filter(Boolean) as { icon: JSX.Element; label: string }[];
 
   return (
     <>
@@ -101,16 +84,17 @@ export default function ApartmentCard({ apt }) {
             priority
           />
 
+          {/* ❤️ Favorite */}
           <button
-            onClick={toggleFavorite}
-            disabled={loading || !isSignedIn}
+            onClick={handleToggle}
+            disabled={loading}
             className={`
               absolute top-3 right-3 p-2 rounded-full transition-all duration-200
               ${isFavorited
                 ? "bg-indigo-600 text-white shadow-lg scale-110"
                 : "bg-white/80 dark:bg-gray-900/80 text-gray-600 hover:bg-white dark:hover:bg-gray-800 hover:text-indigo-600"
               }
-              ${loading || !isSignedIn ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}
+              ${loading ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}
             `}
             aria-label={isFavorited ? "Unfavorite" : "Favorite"}
           >
@@ -121,18 +105,45 @@ export default function ApartmentCard({ apt }) {
         </div>
 
         <div className="p-4 space-y-2">
+          {/* Title */}
           <h3 className="font-semibold text-base line-clamp-2">
             {apt.title || "Untitled Apartment"}
           </h3>
+
+          {/* Price */}
           <div className="flex items-baseline justify-between">
-            <p className="text-lg font-bold text-indigo-500">
+            <p className="text-lg font-bold text-indigo-400">
               ฿{(apt.price || 0).toLocaleString()}
             </p>
-            <p className="text-xs text-gray-500">per month</p>
+            <p className="text-xs ">per month</p>
           </div>
+
+          {/* Electricity Rate */}
+          {apt.electricityRate != null && (
+            <div className="flex items-center text-xs  gap-1">
+              <Zap className="w-3 h-3 text-yellow-500" />
+              {apt.electricityRate.toFixed(2)} ฿/unit
+            </div>
+          )}
+
+          {/* Amenities */}
+          {amenities.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-2">
+              {amenities.map((a, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-1 text-xs bg-indigo-50 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded-lg"
+                >
+                  {a.icon}
+                  <span>{a.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
+      {/* Modal */}
       <ApartmentModal
         apt={apt}
         isOpen={isModalOpen}

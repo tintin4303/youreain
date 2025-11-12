@@ -1,3 +1,4 @@
+// src/app/api/users/[id]/route.js
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 

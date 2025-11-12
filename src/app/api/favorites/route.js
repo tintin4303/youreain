@@ -3,6 +3,9 @@ import { auth } from "@clerk/nextjs/server";
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 import Apartment from "@/models/Apartment";
+import mongoose from "mongoose";
+
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 export async function POST(req) {
   try {
@@ -20,11 +23,28 @@ export async function POST(req) {
     }
 
     const { apartmentId } = body;
-    if (!apartmentId || typeof apartmentId !== "string") {
-      return Response.json({ error: "Invalid apartmentId" }, { status: 400 });
+
+    // 1. Type check
+    if (typeof apartmentId !== "string") {
+      return Response.json({ error: "apartmentId must be string" }, { status: 400 });
     }
 
-    // Use .lean() to avoid Mongoose document issues
+    // 2. Length + hex check
+    if (!apartmentId.match(/^[0-9a-fA-F]{24}$/)) {
+      return Response.json({ error: "Invalid apartmentId format" }, { status: 400 });
+    }
+
+    // 3. Mongoose validation
+    if (!isValidObjectId(apartmentId)) {
+      return Response.json({ error: "Invalid ObjectId" }, { status: 400 });
+    }
+
+    // 4. Check if apartment exists
+    const apartment = await Apartment.findById(apartmentId).lean();
+    if (!apartment) {
+      return Response.json({ error: "Apartment not found" }, { status: 404 });
+    }
+
     let user = await User.findOne({ clerkId: userId }).lean();
     if (!user) {
       const newUser = new User({ clerkId: userId, email: "", favorites: [] });
@@ -32,9 +52,7 @@ export async function POST(req) {
       user = newUser.toObject();
     }
 
-    const isCurrentlyFavorited = Array.isArray(user.favorites)
-      ? user.favorites.some(id => id.toString() === apartmentId)
-      : false;
+    const isCurrentlyFavorited = user.favorites.some(id => id.toString() === apartmentId);
 
     if (isCurrentlyFavorited) {
       await User.updateOne(
@@ -63,7 +81,7 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req) {
+export async function GET() {
   try {
     await dbConnect();
     const { userId } = auth();
