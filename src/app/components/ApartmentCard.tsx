@@ -5,6 +5,7 @@ import { useState } from "react";
 import ApartmentModal from "./ApartmentModal";
 import Image from "next/image";
 import { Heart, Zap, Dumbbell, Utensils, Waves, Car } from "lucide-react";
+import React from "react";
 
 const DEFAULT_IMAGE =
   "https://res.cloudinary.com/demo/image/upload/v1317847384/sample.jpg";
@@ -62,7 +63,7 @@ export default function ApartmentCard({
     apt.gym && { icon: <Dumbbell className="w-4 h-4" />, label: "Gym" },
     apt.swimmingPool && { icon: <Waves className="w-4 h-4" />, label: "Pool" },
     apt.campusVan && { icon: <Car className="w-4 h-4" />, label: "Van" },
-  ].filter(Boolean) as { icon: JSX.Element; label: string }[];
+    ].filter(Boolean) as { icon: React.ReactElement; label: string }[];
 
   return (
     <>
