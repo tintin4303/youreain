@@ -25,6 +25,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import React from "react";
 
 const DEFAULT_IMAGE =
   "https://res.cloudinary.com/demo/image/upload/v1317847384/sample.jpg";
@@ -113,7 +114,7 @@ export default function ApartmentModal({ apt, isOpen, onClose }: ApartmentModalP
       icon: <Bath className="w-4 h-4 text-orange-600" />,
       label: `${apt.bathrooms} Bathroom${apt.bathrooms! > 1 ? "s" : ""}`,
     },
-  ].filter(Boolean) as { icon: JSX.Element; label: string }[];
+    ].filter(Boolean) as { icon: React.ReactElement; label: string }[];
 
   // Embed map handling
   const mapEmbedUrl =
