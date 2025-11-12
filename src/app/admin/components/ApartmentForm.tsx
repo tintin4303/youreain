@@ -1,3 +1,4 @@
+// src/admin/components/ApartmentForm.jsx
 "use client";
 import { useState, useEffect } from "react";
 import ImageUploader from "./ImageUploader";
@@ -111,8 +112,8 @@ export default function ApartmentForm({ apartment, onSave, onCancel, onRefresh }
       price: form.price ? Number(form.price) : null,
       location: form.location || null,
       description: cleanValue(form.description),
-      bedrooms: form.bedrooms !== "" ? Number(form.bedrooms) : null,
-      bathrooms: form.bathrooms !== "" ? Number(form.bathrooms) : null,
+      bedrooms: form.bedrooms != null ? Number(form.bedrooms) : null,
+      bathrooms: form.bathrooms != null ? Number(form.bathrooms) : null,
       propertyType: form.propertyType || null,
       furnished: form.furnished || null,
       images: Array.isArray(form.images) ? form.images : [],
