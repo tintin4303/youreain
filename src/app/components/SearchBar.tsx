@@ -73,7 +73,7 @@ function SearchBarComponent() {
   const hasActiveFilter = currentSearch || maxPrice || bedrooms || propertyType || furnished;
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
+    <div className="relative w-sm md:w-full max-w-2xl">
       <form onSubmit={handleSearch} className="flex items-center h-11 glass-search overflow-hidden">
         <input
           ref={inputRef}

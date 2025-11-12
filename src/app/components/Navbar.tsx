@@ -80,7 +80,7 @@ export default function Navbar() {
       {/* NAVBAR */}
       <nav
         id="nav"
-        className="fixed top-0 left-0 right-0 flex items-center justify-between p-8 shadow-sm z-50 bg-white dark:bg-gray-900"
+        className="fixed top-0 left-0 right-0 flex items-center justify-between p-6 shadow-sm z-50 bg-white dark:bg-gray-900"
       >
         <div className="flex items-center space-x-3">
           <Link href="/" className="flex items-center">
@@ -90,9 +90,6 @@ export default function Navbar() {
               </h1>
             </div>
           </Link>
-        </div>
-        <div className="flex justify-center flex-1 max-w-2xl mx-4">
-          <SearchBar />
         </div>
         <div className="flex items-center space-x-3">
           <button
@@ -126,7 +123,7 @@ export default function Navbar() {
                     onClick={() => setMobileMenu(false)}
                     className="py-2 px-4 hover:bg-gray-400/30 flex justify-between items-center rounded"
                   >
-                    Apartment
+                    Apartments
                     <House className="w-5 h-5 text-indigo-400" />
                   </Link>
 
@@ -136,7 +133,7 @@ export default function Navbar() {
                       setFavoritesOpen(true);
                       setMobileMenu(false);
                     }}
-                    className="py-2 px-4 hover:bg-gray-400/30 flex justify-between items-center rounded text-left"
+                    className="py-2 px-4 cursor-pointer hover:bg-gray-400/30 flex justify-between items-center rounded text-left"
                   >
                     Favorites
                     <Heart className="w-5 h-5 text-red-500" />
@@ -187,7 +184,7 @@ export default function Navbar() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-white/20">
+              <div className="flex items-center justify-between p-4 border-b border-white/20">
                 <h2 className="text-xl font-bold flex items-center gap-2">
                   <Heart className="w-6 h-6 text-red-500 fill-current" />
                   Your Favorites ({favorites.length})

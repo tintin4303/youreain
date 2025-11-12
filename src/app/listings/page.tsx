@@ -4,8 +4,8 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
 import ApartmentCard from "../components/ApartmentCard";
-import Navbar from "../components/Navbar";
 import { useFilters } from "../../context/FilterContext";
+import SearchBar from "../components/SearchBar";
 
 function ListingsContent() {
   const [apartments, setApartments] = useState<any[]>([]);
@@ -48,9 +48,12 @@ function ListingsContent() {
 
   return (
     <>
-      <main className="pt-20 md:pt-24 min-h-screen">
+      <main className="pt-15 md:pt-20 min-h-screen">
+        <div className="flex justify-center mb-8">
+          <SearchBar />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
+          <div className="grid grid-cols-3 gap-2 md:gap-6 md:grid-cols-4">
             {filtered.length === 0 ? (
               <div className="col-span-full text-center py-20">
                 <p className="text-xl text-gray-500">No apartments match your filters.</p>
