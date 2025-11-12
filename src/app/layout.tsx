@@ -4,7 +4,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import Navbar from "./components/Navbar";
 import PageTransition from "./components/PageTransition";
 import { ThemeProvider } from "next-themes";
-
+import { Analytics } from "@vercel/analytics/next"
 import { type Metadata } from 'next'
 import {
   ClerkProvider,
@@ -39,6 +39,7 @@ export default function RootLayout({ children }) {
     >
       {/* Dark class is toggled on <html> by next-themes */}
       <body className="min-h-dvh pt-20 ">
+        <Analytics/>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
