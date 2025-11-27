@@ -11,7 +11,6 @@ export default function Home() {
     <>
       <PageTransition>
         <Hero />
-        <Popular />
       </PageTransition>
     </>
   );
